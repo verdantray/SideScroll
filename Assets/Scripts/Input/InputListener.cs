@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace SideScroll.Input
 {
+    // Scripted by Chococornets
+    // 2023. 05. 15
+    
     [RequireComponent(typeof(PlayerInput))]
     public class InputListener : MonoBehaviour
     {
