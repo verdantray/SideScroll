@@ -12,12 +12,15 @@ namespace SideScroll.Input
     
     public class InputDebugger : MonoBehaviour
     {
+        [SerializeField] private Actor tempActor = null;
+        
         private StringBuilder Logger => logger ??= new StringBuilder();
 
         private StringBuilder logger = null;
 
         private void Start()
         {
+            // 어째선지 에디터 플레이 중엔 출력 안되다가 종료 시 한꺼번에 출력되는 현상이 있음
             // InputSystem.onDeviceChange += LogCurrentDevice;
         }
 
@@ -68,7 +71,7 @@ namespace SideScroll.Input
         }
 
         #endregion
-
+        
         private void LogCurrentDevice(InputDevice device, InputDeviceChange deviceChange)
         {
             LogMessage("Detected Device Change", device.displayName, deviceChange.ToString());

@@ -6967,6 +6967,7 @@ GameObject:
   - component: {fileID: 2639276807704378814}
   - component: {fileID: 2639276806776001095}
   - component: {fileID: 2639276806776001092}
+  - component: {fileID: 3352415251368087200}
   m_Layer: 0
   m_Name: UnityChan
   m_TagString: Untagged
@@ -7042,6 +7043,22 @@ CapsuleCollider:
   m_Height: 1.65
   m_Direction: 1
   m_Center: {x: 0, y: 0.825, z: 0}
+--- !u!114 &3352415251368087200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639276807710902778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7bfce856bca864fadc4e241e46ca71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transform: {fileID: 2639276807711265818}
+  rigidbody: {fileID: 2639276806776001095}
+  modelTransform: {fileID: 4658160622759746014}
+  animator: {fileID: 4658160622759746015}
 --- !u!1 &2639276807710902780
 GameObject:
   m_ObjectHideFlags: 0
@@ -7191,7 +7208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4658160622759746013}
-  m_LocalRotation: {x: 0, y: 0.86602545, z: 0, w: 0.49999994}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7201,7 +7218,7 @@ Transform:
   - {fileID: 2639276807711266252}
   m_Father: {fileID: 2639276807711265818}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4658160622759746015
 Animator:
   serializedVersion: 5
