@@ -49,25 +49,42 @@ namespace SideScroll.Input
         // 수평 이동은 Axis 값 항상 적용
         public void OnMoveHorizontal(InputAction.CallbackContext ctx)
         {
-            if (ctx.phase != InputActionPhase.Performed) return;
-
-            float axis = ctx.ReadValue<float>();
+            ActorDirection direction = ctx.ReadValue<float>() >= 1.0f
+                ? ActorDirection.Right
+                : ActorDirection.Left;
             
-            LogMessage(
-                "Move Horizontal ",
-                axis > 0.0f ? "Right" : "Left",
-                axis.ToString(CultureInfo.InvariantCulture)
-            );
+            switch (ctx.phase)
+            {
+                case InputActionPhase.Started:
+                    tempActor.Move(direction);
+                    break;
+                
+                case InputActionPhase.Canceled:
+                    tempActor.Idle();
+                    break;
+            }
+            
+            // if (ctx.phase != InputActionPhase.Performed) return;
+            //
+            // float axis = ctx.ReadValue<float>();
+            //
+            // LogMessage(
+            //     "Move Horizontal ",
+            //     axis > 0.0f ? "Right" : "Left",
+            //     axis.ToString(CultureInfo.InvariantCulture)
+            // );
         }
 
         // 수직 이동은 입력 시 마다 적용
         public void OnMoveVertical(InputAction.CallbackContext ctx)
         {
             if (ctx.phase != InputActionPhase.Started) return;
-
-            string verticalBehavior = ctx.ReadValue<float>() > 0.0f ? "Jump" : "Sit";
             
-            LogMessage("Move Vertical ", verticalBehavior);
+            if (ctx.ReadValue<float>() > 0.0f) tempActor.Jump();
+
+            // string verticalBehavior = ctx.ReadValue<float>() > 0.0f ? "Jump" : "Sit";
+            //
+            // LogMessage("Move Vertical ", verticalBehavior);
         }
 
         #endregion
