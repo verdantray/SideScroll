@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,44 +25,37 @@ namespace SideScroll.Input
 
         #region InGame Events
 
-        public void OnAttack(InputAction.CallbackContext context)
+        // public void OnAttack(InputAction.CallbackContext context)
+        // {
+        //     if (context.phase != InputActionPhase.Started) return;
+        //     LogMessage("Attack");
+        // }
+        //
+        // public void OnSkill(InputAction.CallbackContext context)
+        // {
+        //     if (context.phase != InputActionPhase.Started) return;
+        //     LogMessage("Skill");
+        // }
+        //
+        // public void OnEvade(InputAction.CallbackContext ctx)
+        // {
+        //     if (ctx.phase != InputActionPhase.Started) return;
+        //     LogMessage("Evade");
+        // }
+        //
+        // public void OnVertical(InputAction.CallbackContext ctx)
+        // {
+        //     if (ctx.phase != InputActionPhase.Started) return;
+        //
+        //     string verticalBehavior = ctx.ReadValue<float>() > 0.0f ? "Jump" : "Sit";
+        //
+        //     LogMessage("Move Vertical ", verticalBehavior);
+        // }
+
+        public void OnHorizontal(InputValue inputValue)
         {
-            if (context.phase != InputActionPhase.Started) return;
-            LogMessage("Attack");
-        }
-
-        public void OnSkill(InputAction.CallbackContext context)
-        {
-            if (context.phase != InputActionPhase.Started) return;
-            LogMessage("Skill");
-        }
-
-        public void OnEvade(InputAction.CallbackContext ctx)
-        {
-            if (ctx.phase != InputActionPhase.Started) return;
-            LogMessage("Evade");
-        }
-
-        public void OnVertical(InputAction.CallbackContext context)
-        {
-            if (context.phase != InputActionPhase.Started) return;
-
-            string verticalBehavior = context.ReadValue<float>() > 0.0f ? "Jump" : "Sit";
-
-            LogMessage("Move Vertical ", verticalBehavior);
-        }
-
-        public void OnHorizontal(InputAction.CallbackContext context)
-        {
-            if (context.phase != InputActionPhase.Started) return;
-
-            float axis = context.ReadValue<float>();
-
-            LogMessage(
-                "Move Horizontal ",
-                axis > 0.0f ? "Right" : "Left",
-                axis.ToString(CultureInfo.InvariantCulture)
-            );
+            short axis = Convert.ToInt16(inputValue.Get<float>());
+            LogMessage(axis.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion

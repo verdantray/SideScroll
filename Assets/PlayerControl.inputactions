@@ -43,12 +43,12 @@
                 },
                 {
                     "name": "Horizontal",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "58d9ede8-2311-4d82-adad-256f993169dc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -59,17 +59,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Default",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4531f709-ff7d-4b9f-8a63-628e193c994a",
-                    "path": "<XInputController>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -87,17 +76,6 @@
                 },
                 {
                     "name": "",
-                    "id": "ca26da6d-ebe1-4ad8-a0b5-247d7f816472",
-                    "path": "<XInputController>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Evade",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "038d5d63-f910-44b5-b602-96c0f360fa00",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -106,50 +84,6 @@
                     "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "176470c4-4c72-4089-8718-f1d05c58a9b0",
-                    "path": "<XInputController>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "93724a44-3641-49b1-b0b7-8adbda569a10",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Vertical",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "cc135d8b-a544-4a2f-897d-7c34aaa9f152",
-                    "path": "<XInputController>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Vertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "ad71405d-bd5d-4315-9508-0b2a63e636f4",
-                    "path": "<XInputController>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Vertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "1D Axis",
@@ -197,6 +131,50 @@
                 },
                 {
                     "name": "negative",
+                    "id": "7c42d407-d15b-4110-82d1-32ec178342a3",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "16a5f11d-7c13-445a-8667-abeed7ae30fa",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "a266a233-aeed-4835-a2c1-6041c374e8b2",
+                    "path": "<AndroidGamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ece96d11-0ae1-425a-aa7e-1167790f0e94",
+                    "path": "<AndroidGamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
                     "id": "685a9f7d-6f35-46f3-bdf8-888f726ef040",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -210,39 +188,6 @@
                     "name": "positive",
                     "id": "5ea04016-8a01-495e-ba53-b3ee63c60af8",
                     "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "80eb266b-6885-495e-ac52-e58cf9c8fa36",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "f92852fd-5a4c-4fc8-afb5-550cf5f111da",
-                    "path": "<XInputController>/leftStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Horizontal",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "f40fa3c9-9364-4f9c-8546-55ccb6d02827",
-                    "path": "<XInputController>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
