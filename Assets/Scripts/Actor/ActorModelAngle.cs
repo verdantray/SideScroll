@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SideScroll
+namespace SideScroll.Actor
 {
     [Serializable]
     public class AngleOnActivity
@@ -15,19 +16,21 @@ namespace SideScroll
     
     public class ActorModelAngle : MonoBehaviour
     {
-        [SerializeField] private Actor actor = null;
-        [SerializeField] private Transform modelAngle = null;
+        private const float CommonActivityAngle = 120.0f;
+        
+        [SerializeField] private ActorBase actorBase = null;
+        [SerializeField] private Transform modelTransform = null;
         [SerializeField] private AngleOnActivity[] angleOnActivities = null;
 
         private void Reset()
         {
-            modelAngle = transform;
+            modelTransform = transform;
 
             angleOnActivities = new []
             {
                 new AngleOnActivity
                 {
-                    activity = ActorActivity.Idle,
+                    activity = ActorActivity.Common,
                     angle = 120.0f
                 },
                 new AngleOnActivity
@@ -40,30 +43,32 @@ namespace SideScroll
 
         private void Start()
         {
-            if (!actor) return;
+            if (!actorBase) return;
 
-            actor.OnDirectionChanged += SetAngleOnDirection;
-            actor.OnActivityChanged += SetAngleOnActivity;
+            actorBase.OnDirectionChanged += SetAngleOnDirection;
+            actorBase.OnActivityChanged += SetAngleOnActivity;
             
-            SetAngle(actor.CurDirection, actor.CurActivity);
+            SetAngle(actorBase.CurDirection, actorBase.CurActivity);
         }
 
         private void SetAngleOnDirection(ActorDirection direction)
         {
-            SetAngle(direction, actor.CurActivity);
+            SetAngle(direction, actorBase.CurActivity);
         }
 
         private void SetAngleOnActivity(ActorActivity activity)
         {
-            SetAngle(actor.CurDirection, activity);
+            SetAngle(actorBase.CurDirection, activity);
         }
 
         private void SetAngle(ActorDirection direction, ActorActivity activity)
         {
-            float angle = angleOnActivities.FirstOrDefault(aoa => aoa.activity == activity)?.angle ?? 0.0f;
+            float angle = angleOnActivities.FirstOrDefault(aoa => aoa.activity == activity)?.angle
+                          ?? CommonActivityAngle;
+            
             float directionMultiplier = direction == ActorDirection.Right ? 1.0f : -1.0f;
 
-            modelAngle.eulerAngles = Vector3.up * angle * directionMultiplier;
+            modelTransform.eulerAngles = Vector3.up * angle * directionMultiplier;
         }
     }
 }

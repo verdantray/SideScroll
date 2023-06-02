@@ -15,7 +15,9 @@ namespace SideScroll.Input
 
         private void Reset()
         {
-            gameObject.AddComponent<PlayerInput>();
+            playerInput = gameObject.GetComponent<PlayerInput>();
         }
+        
+        
     }
 }

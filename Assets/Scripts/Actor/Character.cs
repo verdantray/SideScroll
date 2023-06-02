@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SideScroll
+namespace SideScroll.Actor
 {
-    public class Character : Actor
+    public class Character : ActorBase
     {
         
     }
