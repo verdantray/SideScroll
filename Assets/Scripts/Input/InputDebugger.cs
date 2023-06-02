@@ -10,7 +10,7 @@ namespace SideScroll.Input
     // Scripted by Chococornets
     // 2023. 05. 15
 
-    public class InputDebugger : MonoBehaviour, PlayerControl.IInGameActions
+    public class InputDebugger : MonoBehaviour
     {
         private StringBuilder Logger => logger ??= new StringBuilder();
 
