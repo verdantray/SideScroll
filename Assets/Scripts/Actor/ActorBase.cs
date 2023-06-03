@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,7 +57,17 @@ namespace SideScroll.Actor
         
         private ActorActivity mCurActivity = ActorActivity.Idle;
 
+        private bool move = false;
+
         #endregion
+
+        private void FixedUpdate()
+        {
+            if (!move) return;
+
+            Vector3 translation = Vector3.right * ((CurDirection == ActorDirection.Right ? 1.0f : -1.0f) * Time.fixedDeltaTime);
+            transform.Translate(translation);
+        }
 
         public virtual void Idle()
         {
@@ -65,16 +76,14 @@ namespace SideScroll.Actor
         }
         
 
-        public virtual void Move(ActorDirection direction)
+        public virtual void Move(int value)
         {
-            CurDirection = direction;
-            CurActivity = ActorActivity.OnAction;
+            Debug.Log(value);
+            move = value != 0;
 
-            Vector3 translation = (CurDirection == ActorDirection.Right ? Vector3.right : Vector3.left)
-                                  * Time.fixedDeltaTime;
+            if (!move) return;
             
-            transform.Translate(translation);
-            
+            CurDirection = value > 0 ? ActorDirection.Right : ActorDirection.Left;
             modelAnimator.Play("Move");
         }
 

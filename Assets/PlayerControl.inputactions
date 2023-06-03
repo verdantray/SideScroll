@@ -173,17 +173,6 @@
                 },
                 {
                     "name": "",
-                    "id": "c49432e3-7d67-495f-a4c1-2ea5c4e8fc0a",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Default",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "449ad222-ac24-45ac-ae39-c20405d4f048",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
@@ -192,50 +181,29 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "038d5d63-f910-44b5-b602-96c0f360fa00",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Default",
-                    "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b79ec964-2e87-4abd-9429-ad9a252e3d92",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Default",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
     ],
     "controlSchemes": [
         {
-            "name": "Default",
-            "bindingGroup": "Default",
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
             "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": true,
-                    "isOR": false
-                },
                 {
                     "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
                 {
-                    "devicePath": "<AndroidGamepad>",
-                    "isOptional": true,
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
                     "isOR": false
                 }
             ]
