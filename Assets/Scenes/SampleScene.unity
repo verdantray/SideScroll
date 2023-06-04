@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 191764930}
   - component: {fileID: 191764929}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
     m_ActionId: 58d9ede8-2311-4d82-adad-256f993169dc
     m_ActionName: InGame/Horizontal[/Keyboard/leftArrow,/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Default
+  m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Common
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -873,7 +873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2009623410
 RectTransform:
   m_ObjectHideFlags: 0

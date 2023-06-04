@@ -18,6 +18,7 @@ namespace SideScroll.Actor
 
     public abstract class ActorBase : MonoBehaviour
     {
+        [SerializeField] private CharacterController controller = null;
         [SerializeField] private Animator modelAnimator = null;
         
         #region Events
@@ -57,16 +58,21 @@ namespace SideScroll.Actor
         
         private ActorActivity mCurActivity = ActorActivity.Idle;
 
+        private float speed = 5.0f;
+        
         private bool move = false;
+        private static readonly int MoveDelta = Animator.StringToHash("MoveDelta");
 
         #endregion
 
+        private void Start()
+        {
+            Idle();
+        }
+
         private void FixedUpdate()
         {
-            if (!move) return;
-
-            Vector3 translation = Vector3.right * ((CurDirection == ActorDirection.Right ? 1.0f : -1.0f) * Time.fixedDeltaTime);
-            transform.Translate(translation);
+            MovePosition();
         }
 
         public virtual void Idle()
@@ -74,17 +80,16 @@ namespace SideScroll.Actor
             CurActivity = ActorActivity.Idle;
             modelAnimator.Play("Idle");
         }
-        
 
         public virtual void Move(int value)
         {
-            Debug.Log(value);
-            move = value != 0;
-
-            if (!move) return;
+            if (value != 0)
+            {
+                CurDirection = value > 0 ? ActorDirection.Right : ActorDirection.Left;
+            }
             
-            CurDirection = value > 0 ? ActorDirection.Right : ActorDirection.Left;
-            modelAnimator.Play("Move");
+            move = value != 0;
+            modelAnimator.SetInteger(MoveDelta, value);
         }
 
         public virtual void Jump()
@@ -92,6 +97,14 @@ namespace SideScroll.Actor
             CurActivity = ActorActivity.OnAction;
             
             modelAnimator.Play("Jump");
+        }
+
+        private void MovePosition()
+        {
+            if (!move) return;
+            
+            Vector3 translation = Vector3.right * (speed * (CurDirection == ActorDirection.Right ? 1.0f : -1.0f) * Time.fixedDeltaTime);
+            transform.Translate(translation);
         }
     }
 }
