@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +28,8 @@ namespace SideScroll.Actor
         #endregion
         
         #region Fields & Properties
+        
+        private float Gravity => Physics.gravity.y;
 
         public ActorDirection CurDirection
         {
@@ -57,28 +58,25 @@ namespace SideScroll.Actor
         }
         
         private ActorActivity mCurActivity = ActorActivity.Idle;
-
-        private float speed = 5.0f;
+        private Vector3 velocity = Vector3.zero;
         
-        private bool move = false;
         private static readonly int MoveDelta = Animator.StringToHash("MoveDelta");
 
         #endregion
-
-        private void Start()
-        {
-            Idle();
-        }
-
+        
         private void FixedUpdate()
         {
-            MovePosition();
+            FallOnAir();
+            
+            if (velocity == Vector3.zero) return;
+            controller.Move(velocity * Time.fixedDeltaTime);
         }
 
-        public virtual void Idle()
+        private void FallOnAir()
         {
-            CurActivity = ActorActivity.Idle;
-            modelAnimator.Play("Idle");
+            velocity.y = controller.isGrounded && velocity.y < 0.0f
+                ? 0.0f
+                : velocity.y + (Gravity * Time.fixedDeltaTime);
         }
 
         public virtual void Move(int value)
@@ -87,24 +85,17 @@ namespace SideScroll.Actor
             {
                 CurDirection = value > 0 ? ActorDirection.Right : ActorDirection.Left;
             }
-            
-            move = value != 0;
+
+            velocity.x = value;
             modelAnimator.SetInteger(MoveDelta, value);
         }
 
         public virtual void Jump()
         {
             CurActivity = ActorActivity.OnAction;
+            velocity.y += Mathf.Sqrt(controller.height * 2.0f * Mathf.Abs(Physics.gravity.y));
             
             modelAnimator.Play("Jump");
-        }
-
-        private void MovePosition()
-        {
-            if (!move) return;
-            
-            Vector3 translation = Vector3.right * (speed * (CurDirection == ActorDirection.Right ? 1.0f : -1.0f) * Time.fixedDeltaTime);
-            transform.Translate(translation);
         }
     }
 }

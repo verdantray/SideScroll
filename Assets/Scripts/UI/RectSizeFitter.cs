@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SideScroll
+namespace SideScroll.UI
 {
     // 스크린 사이즈에 맞춰 UI가 화면 안에서만 표시되도록 Rect를 맞춥니다.
     

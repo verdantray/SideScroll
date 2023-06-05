@@ -1813,12 +1813,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3fcd350786fecc479c82c89833b087a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorBase: {fileID: 2341553342047601931}
+  actor: {fileID: 2341553342047601931}
   modelTransform: {fileID: 1517125405612058535}
   angleOnActivities:
   - activity: 0
     angle: 120
-  - activity: 1
+  - activity: 2
     angle: 90
 --- !u!1 &2254185941326422584
 GameObject:

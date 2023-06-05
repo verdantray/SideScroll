@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SideScroll.Actor
 {
@@ -18,7 +17,7 @@ namespace SideScroll.Actor
     {
         private const float CommonActivityAngle = 120.0f;
         
-        [SerializeField] private ActorBase actorBase = null;
+        [SerializeField] private ActorBase actor = null;
         [SerializeField] private Transform modelTransform = null;
         [SerializeField] private AngleOnActivity[] angleOnActivities = null;
 
@@ -43,22 +42,22 @@ namespace SideScroll.Actor
 
         private void Start()
         {
-            if (!actorBase) return;
+            if (!actor) return;
 
-            actorBase.OnDirectionChanged += SetAngleOnDirection;
-            actorBase.OnActivityChanged += SetAngleOnActivity;
+            actor.OnDirectionChanged += SetAngleOnDirection;
+            actor.OnActivityChanged += SetAngleOnActivity;
             
-            SetAngle(actorBase.CurDirection, actorBase.CurActivity);
+            SetAngle(actor.CurDirection, actor.CurActivity);
         }
 
         private void SetAngleOnDirection(ActorDirection direction)
         {
-            SetAngle(direction, actorBase.CurActivity);
+            SetAngle(direction, actor.CurActivity);
         }
 
         private void SetAngleOnActivity(ActorActivity activity)
         {
-            SetAngle(actorBase.CurDirection, activity);
+            SetAngle(actor.CurDirection, activity);
         }
 
         private void SetAngle(ActorDirection direction, ActorActivity activity)

@@ -30,7 +30,7 @@ namespace SideScroll.Input
 
         public void OnJump(InputValue inputValue)
         {
-            
+            tempActor.Jump();
         }
 
         public void OnSit(InputValue inputValue)
