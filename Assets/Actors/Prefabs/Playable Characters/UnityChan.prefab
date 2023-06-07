@@ -1711,7 +1711,7 @@ GameObject:
   - component: {fileID: 1517125405612058535}
   - component: {fileID: 4894785318286786013}
   - component: {fileID: 1335124847967289339}
-  - component: {fileID: 4894785318286786010}
+  - component: {fileID: 2060145111967881477}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1801,7 +1801,7 @@ MonoBehaviour:
   collisionColor: {r: 1, g: 0, b: 0, a: 1}
   groundCollisionColor: {r: 0, g: 1, b: 0, a: 1}
   angleLimitDrawScale: 0.05
---- !u!114 &4894785318286786010
+--- !u!114 &2060145111967881477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1810,16 +1810,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2181493914199555357}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fcd350786fecc479c82c89833b087a, type: 3}
+  m_Script: {fileID: 11500000, guid: 713863c9862238447af40071ebcca8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actor: {fileID: 2341553342047601931}
-  modelTransform: {fileID: 1517125405612058535}
-  angleOnActivities:
-  - activity: 0
-    angle: 120
-  - activity: 2
-    angle: 90
 --- !u!1 &2254185941326422584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,7 +2128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 8363460781571514179}
-  modelAnimator: {fileID: 4894785318286786013}
+  model: {fileID: 2060145111967881477}
 --- !u!1 &2395878505012869839
 GameObject:
   m_ObjectHideFlags: 0
