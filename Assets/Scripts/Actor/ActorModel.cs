@@ -53,7 +53,8 @@ namespace SideScroll.Actor
         private Transform mTransform = null;
         private Animator mAnimator = null;
         
-        private readonly int moveAnimHash = Animator.StringToHash("MoveDelta");
+        private readonly int moveDirectionHash = Animator.StringToHash("MoveDirection");
+        private readonly int groundCheckHash = Animator.StringToHash("OnGround");
 
         private void Start()
         {
@@ -68,7 +69,7 @@ namespace SideScroll.Actor
                 CurDirection = delta > 0 ? ActorDirection.Right : ActorDirection.Left;
             }
             
-            ModelAnimator.SetInteger(moveAnimHash, delta);
+            ModelAnimator.SetInteger(moveDirectionHash, delta);
         }
 
         public void PlayJump()
