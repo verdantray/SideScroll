@@ -17,7 +17,6 @@ namespace SideScroll.Actor
         #region Events
 
         public event ActorDirectionDelegate OnDirectionChanged = delegate { };
-        public event ActorMoveDelegate OnActorMoved = delegate { };
         public event ActorJumpDelegate OnActorJumped = delegate { };
 
         #endregion
@@ -35,18 +34,6 @@ namespace SideScroll.Actor
                 OnDirectionChanged.Invoke(mCurDirection);
             }
         }
-
-        public int MoveDelta
-        {
-            get => mMoveDelta;
-            protected set
-            {
-                if (mMoveDelta == value) return;
-
-                mMoveDelta = value;
-                OnActorMoved.Invoke(mMoveDelta);
-            }
-        }
         
         public int JumpCount
         {
@@ -59,6 +46,8 @@ namespace SideScroll.Actor
                 OnActorJumped.Invoke(mJumpCount);
             }
         }
+
+        public Vector3 Velocity => velocity;
         
         private float Gravity => Physics.gravity.y;
 
@@ -67,29 +56,20 @@ namespace SideScroll.Actor
         protected Vector3 velocity = Vector3.zero;
 
         private ActorDirection mCurDirection = ActorDirection.Right;
-        private int mMoveDelta = 0;
         private int mJumpCount = 0;
 
         private void FixedUpdate()
         {
-            FallOnAir();
-            
-            if (velocity == Vector3.zero) return;
-            controller.Move(velocity * Time.fixedDeltaTime);
+            ComputeVelocity();
+            if (velocity.y <= 0.0f && controller.isGrounded) JumpCount = 0;
         }
 
         // ActionMap 상에서 Move InputAction은 1D Axis로 동작하도록 함
         // expected value of 'direction' : -1 ~ 1
-        public virtual void Move(int moveDelta)
+        public virtual void Move(int moveDirection)
         {
-            MoveDelta = moveDelta;
-            
-            if (MoveDelta != 0)
-            {
-                CurDirection = MoveDelta > 0 ? ActorDirection.Right : ActorDirection.Left;
-            }
-            
-            velocity.x = MoveDelta * Const.MoveMultiplier;
+            ChangeDirection(moveDirection);
+            velocity.x = moveDirection * Const.MoveMultiplier;
         }
 
         public virtual void Jump()
@@ -97,12 +77,22 @@ namespace SideScroll.Actor
             JumpCount++;
             velocity.y += Mathf.Sqrt(controller.height * Const.JumpMultiplier * Mathf.Abs(Gravity));
         }
-        
-        private void FallOnAir()
+
+        private void ChangeDirection(int moveDirection)
         {
+            if (moveDirection == 0) return;
+            CurDirection = moveDirection > 0 ? ActorDirection.Right : ActorDirection.Left;
+        }
+
+        private void ComputeVelocity()
+        {
+            // 공중에 있을 시 중력에 비례하여 아래 방향으로 당겨짐 / 지상에 있을 시 y축으로 이동하지 않음
             velocity.y = controller.isGrounded && velocity.y < 0.0f
                 ? 0.0f
                 : velocity.y + (Gravity * Time.fixedDeltaTime);
+            
+            if (velocity == Vector3.zero) return;
+            controller.Move(velocity * Time.fixedDeltaTime);
         }
     }
 }

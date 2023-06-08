@@ -1814,6 +1814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actor: {fileID: 2341553342047601931}
+  modelAnimator: {fileID: 4894785318286786013}
 --- !u!1 &2254185941326422584
 GameObject:
   m_ObjectHideFlags: 0

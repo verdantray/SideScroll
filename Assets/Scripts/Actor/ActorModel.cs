@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +10,7 @@ namespace SideScroll.Actor
     public class ActorModel : MonoBehaviour
     {
         [SerializeField] protected ActorBase actor = null;
+        [SerializeField] protected Animator modelAnimator = null;
 
         private Transform ModelTransform
         {
@@ -20,32 +20,28 @@ namespace SideScroll.Actor
                 return mTransform;
             }
         }
-
-        private Animator ModelAnimator
-        {
-            get
-            {
-                if (!mAnimator) mAnimator = gameObject.GetComponent<Animator>();
-                return mAnimator;
-            }
-        }
         
         private Transform mTransform = null;
-        private Animator mAnimator = null;
         
         private readonly int moveDirectionHash = Animator.StringToHash("MoveDirection");
         private readonly int jumpCountHash = Animator.StringToHash("JumpCount");
+        private readonly int velocityYHash = Animator.StringToHash("VelocityY");
 
         private void Start()
         {
             Initialize();
         }
 
+        private void Update()
+        {
+            Vector3 actorVelocity = actor.Velocity;
+            
+            modelAnimator.SetInteger(moveDirectionHash, Mathf.RoundToInt(actorVelocity.x));
+            modelAnimator.SetFloat(velocityYHash, actorVelocity.y);
+        }
+
         private void Initialize()
         {
-            SetMoveDirection(actor.MoveDelta);
-            actor.OnActorMoved += SetMoveDirection;
-            
             SetAngle(actor.CurDirection);
             actor.OnDirectionChanged += SetAngle;
 
@@ -53,14 +49,10 @@ namespace SideScroll.Actor
             actor.OnActorJumped += SetJumpCount;
         }
 
-        protected void SetMoveDirection(int moveDelta)
-        {
-            ModelAnimator.SetInteger(moveDirectionHash, moveDelta);
-        }
-
         protected void SetJumpCount(int jumpCount)
         {
-            ModelAnimator.SetInteger(jumpCountHash, jumpCount);
+            Debug.Log(jumpCount);
+            modelAnimator.SetInteger(jumpCountHash, jumpCount);
         }
 
         protected void SetAngle(ActorDirection direction)
