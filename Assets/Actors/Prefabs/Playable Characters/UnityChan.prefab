@@ -1813,6 +1813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713863c9862238447af40071ebcca8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actor: {fileID: 2341553342047601931}
 --- !u!1 &2254185941326422584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,7 +2129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 8363460781571514179}
-  model: {fileID: 2060145111967881477}
 --- !u!1 &2395878505012869839
 GameObject:
   m_ObjectHideFlags: 0

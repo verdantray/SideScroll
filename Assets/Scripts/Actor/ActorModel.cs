@@ -1,35 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SideScroll.Actor
 {
-    // Actor가 바라보는 방향, 횡스크롤이므로 반드시 오른쪽 또는 왼쪽을 바라봅니다.
-    public enum ActorDirection { Right, Left }
-
-    public delegate void ActorDirectionDelegate(ActorDirection direction);
-
     /// <summary>
     /// Actor 클래스의 속성을 중계받고 동작에 맞춰 3d 모델을 동작시키는 클래스
     /// </summary>
     public class ActorModel : MonoBehaviour
     {
-        private const float AngleOnRight = 90.0f;
-        private const float AngleOnLeft = -90.0f;
-
-        protected event ActorDirectionDelegate OnDirectionChanged = delegate { };
-
-        public ActorDirection CurDirection
-        {
-            get => mCurDirection;
-            set
-            {
-                if (mCurDirection == value) return;
-                
-                mCurDirection = value;
-                OnDirectionChanged.Invoke(mCurDirection);
-            }
-        }
+        [SerializeField] protected ActorBase actor = null;
 
         private Transform ModelTransform
         {
@@ -49,37 +30,46 @@ namespace SideScroll.Actor
             }
         }
         
-        private ActorDirection mCurDirection = ActorDirection.Right;
         private Transform mTransform = null;
         private Animator mAnimator = null;
         
         private readonly int moveDirectionHash = Animator.StringToHash("MoveDirection");
-        private readonly int groundCheckHash = Animator.StringToHash("OnGround");
+        private readonly int jumpCountHash = Animator.StringToHash("JumpCount");
 
         private void Start()
         {
-            SetAngle(CurDirection);
-            OnDirectionChanged += SetAngle;
+            Initialize();
         }
 
-        public void PlayMove(int delta)
+        private void Initialize()
         {
-            if (delta != 0)
-            {
-                CurDirection = delta > 0 ? ActorDirection.Right : ActorDirection.Left;
-            }
+            SetMoveDirection(actor.MoveDelta);
+            actor.OnActorMoved += SetMoveDirection;
             
-            ModelAnimator.SetInteger(moveDirectionHash, delta);
+            SetAngle(actor.CurDirection);
+            actor.OnDirectionChanged += SetAngle;
+
+            SetJumpCount(actor.JumpCount);
+            actor.OnActorJumped += SetJumpCount;
         }
 
-        public void PlayJump()
+        protected void SetMoveDirection(int moveDelta)
         {
-            ModelAnimator.Play("Jump");
+            ModelAnimator.SetInteger(moveDirectionHash, moveDelta);
         }
 
-        private void SetAngle(ActorDirection direction)
+        protected void SetJumpCount(int jumpCount)
         {
-            ModelTransform.eulerAngles = Vector3.up * (direction == ActorDirection.Right ? AngleOnRight : AngleOnLeft);
+            ModelAnimator.SetInteger(jumpCountHash, jumpCount);
+        }
+
+        protected void SetAngle(ActorDirection direction)
+        {
+            float directionMultiplier = direction == ActorDirection.Right
+                ? Const.ModelAngleOnRight
+                : Const.ModelAngleOnLeft;
+
+            ModelTransform.eulerAngles = Vector3.up * directionMultiplier;
         }
     }
 }
