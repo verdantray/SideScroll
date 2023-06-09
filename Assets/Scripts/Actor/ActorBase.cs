@@ -11,6 +11,9 @@ namespace Actor
     {
         [SerializeField] private CharacterController controller = null;
 
+        private const float MoveMultiplier = 5.0f;  // Move 시 속도 상수
+        private const float JumpMultiplier = 2.0f; // Jump 시 높이 상수
+
         #region Events
 
         public event ActorDirectionDelegate OnDirectionChanged = delegate { };
@@ -66,13 +69,13 @@ namespace Actor
         public virtual void Move(int moveDirection)
         {
             ChangeDirection(moveDirection);
-            velocity.x = moveDirection * Const.MoveMultiplier;
+            velocity.x = moveDirection * MoveMultiplier;
         }
 
         public virtual void Jump()
         {
             JumpCount++;
-            velocity.y += Mathf.Sqrt(controller.height * Const.JumpMultiplier * Mathf.Abs(Gravity));
+            velocity.y += Mathf.Sqrt(controller.height * JumpMultiplier * Mathf.Abs(Gravity));
         }
 
         private void ChangeDirection(int moveDirection)
