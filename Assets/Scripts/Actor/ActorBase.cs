@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace SideScroll.Actor
+namespace Actor
 {
     // Actor가 바라보는 방향, 횡스크롤이므로 반드시 오른쪽 또는 왼쪽을 바라봅니다.
     public enum ActorDirection { Right, Left }
     public delegate void ActorDirectionDelegate(ActorDirection direction);
-    public delegate void ActorMoveDelegate(int moveDirection);
     public delegate void ActorJumpDelegate(int jumpCount);
     
     public abstract class ActorBase : MonoBehaviour

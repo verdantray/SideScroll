@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace SideScroll.Input
+namespace InputHandle
 {
     // Scripted by Chococornets
     // 2023. 05. 15
