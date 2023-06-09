@@ -65,7 +65,7 @@ namespace Actor
         }
 
         // ActionMap 상에서 Move InputAction은 1D Axis로 동작하도록 함
-        // expected value of 'direction' : -1 ~ 1
+        // expected value of 'direction' : -1, 0, 1
         public virtual void Move(int moveDirection)
         {
             ChangeDirection(moveDirection);
