@@ -68,7 +68,7 @@ namespace Actor
         // expected value of 'direction' : -1, 0, 1
         public virtual void Move(int moveDirection)
         {
-            ChangeDirection(moveDirection);
+            if (moveDirection != 0) CurDirection = moveDirection > 0 ? ActorDirection.Right : ActorDirection.Left;
             velocity.x = moveDirection * MoveMultiplier;
         }
 
@@ -76,12 +76,6 @@ namespace Actor
         {
             JumpCount++;
             velocity.y += Mathf.Sqrt(controller.height * JumpMultiplier * Mathf.Abs(Gravity));
-        }
-
-        private void ChangeDirection(int moveDirection)
-        {
-            if (moveDirection == 0) return;
-            CurDirection = moveDirection > 0 ? ActorDirection.Right : ActorDirection.Left;
         }
 
         private void ComputeVelocity()
