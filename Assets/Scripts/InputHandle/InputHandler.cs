@@ -11,7 +11,7 @@ namespace InputHandle
     public class InputHandler : MonoBehaviour, IInputHandleable
     {
         [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private ActorBase tempActor = null;
+        [SerializeField] private Character tempActor = null;
 
         private void Reset()
         {

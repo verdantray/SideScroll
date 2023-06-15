@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Actor
@@ -5,28 +6,17 @@ namespace Actor
     // Actor가 바라보는 방향, 횡스크롤이므로 반드시 오른쪽 또는 왼쪽을 바라봅니다.
     public enum ActorDirection { Right, Left }
     public delegate void ActorDirectionDelegate(ActorDirection direction);
-    public delegate void ActorJumpDelegate(int jumpCount);
     
     public abstract class ActorBase : MonoBehaviour
     {
-        [SerializeField] private CharacterController controller = null;
-
-        private const float MoveMultiplier = 5.0f;  // Move 시 속도 상수
-        private const float JumpMultiplier = 2.0f; // Jump 시 높이 상수
-
-        #region Events
-
+        [SerializeField] private GameObject modelObject = null;
+        
         public event ActorDirectionDelegate OnDirectionChanged = delegate { };
-        public event ActorJumpDelegate OnActorJumped = delegate { };
-
-        #endregion
-
-        #region Properties
 
         public ActorDirection CurDirection
         {
             get => mCurDirection;
-            protected set
+            set
             {
                 if (mCurDirection == value) return;
 
@@ -34,59 +24,50 @@ namespace Actor
                 OnDirectionChanged.Invoke(mCurDirection);
             }
         }
-        
-        public int JumpCount
-        {
-            get => mJumpCount;
-            protected set
-            {
-                if (mJumpCount == value) return;
 
-                mJumpCount = value;
-                OnActorJumped.Invoke(mJumpCount);
+        protected Transform ModelTransform
+        {
+            get
+            {
+                if (!(bool)mModelTransform) mModelTransform = modelObject.GetComponent<Transform>();
+                return mModelTransform;
             }
         }
 
-        public Vector3 Velocity => velocity;
-        
-        private float Gravity => Physics.gravity.y;
-
-        #endregion
-
-        protected Vector3 velocity = Vector3.zero;
+        protected Animator ModelAnimator
+        {
+            get
+            {
+                if (!(bool)mModelAnimator) mModelAnimator = modelObject.GetComponent<Animator>();
+                return mModelAnimator;
+            }
+        }
 
         private ActorDirection mCurDirection = ActorDirection.Right;
-        private int mJumpCount = 0;
+        private Transform mModelTransform = null;
+        private Animator mModelAnimator = null;
 
-        private void FixedUpdate()
+        protected virtual void Start()
         {
-            ComputeVelocity();
-            if (velocity.y <= 0.0f && controller.isGrounded) JumpCount = 0;
+            // NPC 등의 경우 정면을 향하도록 합니다.
+            Idle();
+            SetAngle(180.0f);
         }
 
-        // ActionMap 상에서 Move InputAction은 1D Axis로 동작하도록 함
-        // expected value of 'direction' : -1, 0, 1
-        public virtual void Move(int moveDirection)
+        protected void SetAngle(float angleToSet)
         {
-            if (moveDirection != 0) CurDirection = moveDirection > 0 ? ActorDirection.Right : ActorDirection.Left;
-            velocity.x = moveDirection * MoveMultiplier;
+            ModelTransform.eulerAngles = Vector3.up
+                                          * (angleToSet * (CurDirection == ActorDirection.Right ? 1.0f : -1.0f));
         }
 
-        public virtual void Jump()
+        public virtual void Idle()
         {
-            JumpCount++;
-            velocity.y += Mathf.Sqrt(controller.height * JumpMultiplier * Mathf.Abs(Gravity));
+            ModelAnimator.Play("Idle");
         }
 
-        private void ComputeVelocity()
+        public virtual void SetPosition(Vector3 position)
         {
-            // 공중에 있을 시 중력에 비례하여 아래 방향으로 당겨짐 / 지상에 있을 시 y축으로 이동하지 않음
-            velocity.y = controller.isGrounded && velocity.y < 0.0f
-                ? 0.0f
-                : velocity.y + (Gravity * Time.fixedDeltaTime);
-            
-            if (velocity == Vector3.zero) return;
-            controller.Move(velocity * Time.fixedDeltaTime);
+            transform.position = position;
         }
     }
 }
