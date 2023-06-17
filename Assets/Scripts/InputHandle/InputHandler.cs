@@ -20,15 +20,13 @@ namespace InputHandle
         
         public void OnMove(InputValue inputValue)
         {
-            Debug.Log("Move");
-            
             int axis = Mathf.RoundToInt(inputValue.Get<float>());
-            tempActor.Move(axis);
+            // tempActor.Move(axis);
         }
 
         public void OnJump(InputValue inputValue)
         {
-            tempActor.Jump();
+            
         }
 
         public void OnSit(InputValue inputValue)
