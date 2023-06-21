@@ -2044,7 +2044,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelObject: {fileID: 2181493914199555357}
   rigidBody: {fileID: 1642810226499410023}
-  collisionCheckDist: 0.1
+  groundCheckInfo:
+    originOffset: {x: 0, y: 0, z: 0}
+    maxDistance: 0.02
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
 --- !u!1 &2395878505012869839
 GameObject:
   m_ObjectHideFlags: 0
