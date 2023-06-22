@@ -2044,7 +2044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelObject: {fileID: 2181493914199555357}
   rigidBody: {fileID: 1642810226499410023}
-  groundCheckInfo:
+  collisionChecker:
     originOffset: {x: 0, y: 0, z: 0}
     maxDistance: 0.02
     layerMask:

@@ -18,19 +18,23 @@ namespace Actor
         public float maxDistance;
         public LayerMask layerMask;
 
-        public (Vector3 origin, float maxDist, LayerMask layerMask) GetRayCastParameters(Vector3 position)
+        public bool GetRayCastResult(Vector3 position, Vector3 direction)
         {
-            return (position + originOffset, maxDistance, layerMask);
+            return Physics.Raycast(position + originOffset, direction, maxDistance, layerMask);
         }
     }
     
     public class Character : InteractableActor
     {
-        [SerializeField] private RayCastInfo groundCheckInfo = default;
+        [SerializeField] private RayCastInfo collisionChecker = default;
 
         private readonly int jumpAnimParameter = Animator.StringToHash("JumpState");
+        private readonly int moveAnimParameter = Animator.StringToHash("MoveDirection");
 
         public bool IsGround { get; private set; } = false;
+        public int JumpCount { get; private set; } = 0;
+        
+        private float moveDirection = 0.0f;
         
         private JumpState JumpState
         {
@@ -46,16 +50,18 @@ namespace Actor
         
         private JumpState jumpState = JumpState.Downward;
 
-        public void Move(int moveDirection)
+        public void Move(int axis)
         {
-            if (moveDirection != 0)
+            if (axis != 0)
             {
-                CurDirection = moveDirection > 0
+                CurDirection = axis > 0
                     ? ActorDirection.Right
                     : ActorDirection.Left;
             }
-            
-            rigidBody.AddForce(Vector3.right * moveDirection, ForceMode.VelocityChange);
+
+            moveDirection = axis;
+            ModelAnimator.SetInteger(moveAnimParameter, axis);
+            SetAngle(90.0f * (CurDirection == ActorDirection.Right ? 1.0f : -1.0f));
         }
 
         public void Jump()
@@ -66,31 +72,23 @@ namespace Actor
 
         private void FixedUpdate()
         {
-            CheckGroundState();
+            CheckGroundCollision();
+            rigidBody.MovePosition(rigidBody.position + Vector3.right * (moveDirection * Time.fixedDeltaTime * 5.0f));
         }
 
-        private void CheckGroundState()
+        private void CheckGroundCollision()
         {
-            var (origin, maxDist, layerMask) = groundCheckInfo.GetRayCastParameters(rigidBody.position);
-            
-            IsGround = Physics.Raycast(
-                origin: origin,
-                direction: Vector3.down,
-                maxDistance: maxDist,
-                layerMask: layerMask
-            );
+            IsGround = collisionChecker.GetRayCastResult(rigidBody.position, Vector3.down);
 
             if (IsGround)
             {
                 JumpState = JumpState.Ground;
             }
-            else if (rigidBody.velocity.y > 0.0f)
-            {
-                JumpState = JumpState.Upward;
-            }
             else
             {
-                JumpState = JumpState.Downward;
+                JumpState = rigidBody.velocity.y > 0.0f
+                    ? JumpState.Upward
+                    : JumpState.Downward;
             }
         }
     }
